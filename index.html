@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physics Pony Park</title>
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="app popzone">
+  <header class="bar popzone">
+    <div class="bar-left">
+      <button class="btn small" id="home-btn" type="button" data-go="menu" hidden>Park map</button>
+      <span class="crumb" id="crumb">Park map</span>
+    </div>
+    <div class="bar-right">
+      <span class="pill" id="star-total" title="Stars earned in both games"></span>
+      <button class="tog" id="tog-music" type="button" aria-pressed="true">Music</button>
+      <button class="tog" id="tog-sfx" type="button" aria-pressed="true">Sound</button>
+    </div>
+  </header>
+
+  <!-- ============ PARK MAP ============ -->
+  <main class="screen popzone" id="s-menu">
+    <section class="hero popzone">
+      <div class="txt">
+        <h1>Physics Pony Park</h1>
+        <div class="rainbow"></div>
+        <p>Two rides, real physics. Play each game to earn stars, then open the physics lab to type in your own numbers and see every equation worked out.</p>
+      </div>
+    </section>
+
+    <div class="attractions popzone">
+      <article class="attr">
+        <svg class="art" viewBox="0 0 320 150" role="img" aria-label="A rollercoaster car flying from a ramp toward a landing pad">
+          <rect x="0" y="128" width="320" height="22" style="fill:var(--scene-ground)"/>
+          <path d="M14 126 L70 78" style="stroke:var(--scene-ink);fill:none" stroke-width="6" stroke-linecap="round"/>
+          <path d="M14 126 L70 78" style="stroke:var(--scene-rail);fill:none" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M70 78 Q150 -16 244 124" style="stroke:var(--pink);fill:none" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>
+          <path d="M70 84 Q150 -8 244 128" style="stroke:var(--butter);fill:none" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round" opacity=".8"/>
+          <path d="M70 90 Q150 0 244 130" style="stroke:var(--sky);fill:none" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round" opacity=".7"/>
+          <rect x="218" y="122" width="62" height="8" rx="3" style="fill:var(--mint);stroke:var(--scene-ink)" stroke-width="2"/>
+          <rect x="237" y="122" width="24" height="8" style="fill:var(--butter)"/>
+          <g transform="translate(86 60) rotate(-40)">
+            <rect x="-16" y="-12" width="32" height="11" rx="4" style="fill:var(--pink);stroke:var(--scene-ink)" stroke-width="2"/>
+            <circle cx="-9" cy="0" r="3.5" style="fill:var(--scene-ink)"/><circle cx="9" cy="0" r="3.5" style="fill:var(--scene-ink)"/>
+            <ellipse cx="3" cy="-18" rx="8" ry="7" style="fill:var(--cream);stroke:var(--scene-ink)" stroke-width="1.5"/>
+            <path d="M0 -24 L2 -32 L7 -24Z" style="fill:var(--butter)"/>
+          </g>
+          <path d="M44 30l2.6 6 6.4.6-4.8 4.2 1.5 6.3-5.7-3.4-5.7 3.4 1.5-6.3-4.8-4.2 6.4-.6z" style="fill:var(--butter)"/>
+          <path d="M282 44l2 4.6 5 .5-3.7 3.2 1.2 4.9-4.5-2.7-4.5 2.7 1.2-4.9-3.7-3.2 5-.5z" style="fill:var(--lilac)"/>
+        </svg>
+        <div class="attr-body">
+          <h2>Sky-High Rollercoaster</h2>
+          <p>Projectile motion. Pick the launch speed and angle so the car lands on the pad.</p>
+          <div class="prog" id="prog-coaster"></div>
+          <div class="btnrow">
+            <button class="btn primary big" type="button" data-go="coaster-play">Play the game</button>
+            <button class="btn big" type="button" data-go="coaster-lab">Physics lab</button>
+          </div>
+        </div>
+      </article>
+      <article class="attr">
+        <svg class="art" viewBox="0 0 320 150" role="img" aria-label="Two bumper cars colliding with a star burst between them">
+          <rect x="8" y="14" width="304" height="124" rx="22" style="fill:var(--scene-floor-a);stroke:var(--lilac)" stroke-width="7"/>
+          <g style="fill:var(--scene-floor-b)"><rect x="24" y="30" width="38" height="38"/><rect x="100" y="30" width="38" height="38"/><rect x="176" y="30" width="38" height="38"/><rect x="252" y="30" width="38" height="38"/><rect x="62" y="68" width="38" height="38"/><rect x="138" y="68" width="38" height="38"/><rect x="214" y="68" width="38" height="38"/><rect x="24" y="106" width="38" height="24"/><rect x="100" y="106" width="38" height="24"/><rect x="176" y="106" width="38" height="24"/><rect x="252" y="106" width="38" height="24"/></g>
+          <g transform="translate(112 78)">
+            <rect x="-42" y="-24" width="84" height="48" rx="18" style="fill:var(--pink);stroke:var(--scene-ink)" stroke-width="3"/>
+            <ellipse cx="0" cy="0" rx="15" ry="13" style="fill:var(--cream);stroke:var(--scene-ink)" stroke-width="2"/>
+            <ellipse cx="14" cy="0" rx="8" ry="6" style="fill:var(--cream);stroke:var(--scene-ink)" stroke-width="2"/>
+            <circle cx="6" cy="-6" r="2" style="fill:var(--scene-ink)"/><circle cx="6" cy="6" r="2" style="fill:var(--scene-ink)"/>
+            <path d="M-12 -20 L-6 -34 L2 -20Z" style="fill:var(--butter)"/>
+          </g>
+          <g transform="translate(212 78) scale(-1 1)">
+            <rect x="-34" y="-20" width="68" height="40" rx="15" style="fill:var(--mint);stroke:var(--scene-ink)" stroke-width="3"/>
+            <ellipse cx="0" cy="0" rx="12" ry="11" style="fill:var(--cream);stroke:var(--scene-ink)" stroke-width="2"/>
+            <ellipse cx="11" cy="0" rx="6" ry="5" style="fill:var(--cream);stroke:var(--scene-ink)" stroke-width="2"/>
+            <circle cx="5" cy="-5" r="2" style="fill:var(--scene-ink)"/><circle cx="5" cy="5" r="2" style="fill:var(--scene-ink)"/>
+          </g>
+          <path d="M162 40l7 16 17 2-13 11 4 17-15-9-15 9 4-17-13-11 17-2z" style="fill:var(--butter);stroke:var(--scene-ink)" stroke-width="2.5" stroke-linejoin="round"/>
+        </svg>
+        <div class="attr-body">
+          <h2>Bumper Cars</h2>
+          <p>Momentum and moment of inertia. Crash car A into car B so B slides to a stop in the parking bay.</p>
+          <div class="prog" id="prog-bumper"></div>
+          <div class="btnrow">
+            <button class="btn primary big" type="button" data-go="bumper-play">Play the game</button>
+            <button class="btn big" type="button" data-go="bumper-lab">Physics lab</button>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="pop-note popzone">Balloons drifting by? Click one in an empty spot to pop it. Popped so far: <b id="pop-count">0</b></p>
+  </main>
+
+  <!-- ============ COASTER GAME ============ -->
+  <main class="screen popzone" id="s-coaster-play" hidden>
+    <div class="ride-head popzone">
+      <div><h2>Sky-High Rollercoaster</h2><p>Land the car on the pad. Drag on the picture to aim, or type exact numbers.</p></div>
+      <div class="subnav" role="group" aria-label="Rollercoaster pages"><button type="button" data-go="coaster-play" aria-current="page">Game</button><button type="button" data-go="coaster-lab">Physics lab</button></div>
+    </div>
+    <div class="levels" id="cg-levels" role="group" aria-label="Levels"></div>
+    <div class="panel brief" id="cg-brief"></div>
+    <div class="play-grid">
+      <div class="stage">
+        <div class="live">
+          <div class="chip"><small>Time</small><b id="cgl-t">0.00</b> <span class="unit">s</span></div>
+          <div class="chip"><small>Distance</small><b id="cgl-x">0.00</b> <span class="unit">m</span></div>
+          <div class="chip"><small>Height</small><b id="cgl-y">0.00</b> <span class="unit">m</span></div>
+          <div class="chip"><small>Speed</small><b id="cgl-v">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Stars grabbed</small><b id="cgl-c">0</b></div>
+        </div>
+        <div class="canvas-wrap" id="cg-wrap"><canvas id="cg-canvas" class="aim" role="img" aria-label="Side view of the launch ramp, landing pad and flight path. Drag to aim."></canvas></div>
+        <div class="panel result" id="cg-result" aria-live="polite"></div>
+      </div>
+      <div class="panel">
+        <h3>Launch controls</h3>
+        <div id="cg-fields"></div>
+        <div class="btnrow">
+          <button class="btn primary big" id="cg-go" type="button">Launch!</button>
+          <button class="btn" id="cg-hint" type="button">Hint (−20 pts)</button>
+        </div>
+        <p class="hintbox" id="cg-hintbox"></p>
+        <div class="sub">Check your math</div>
+        <button class="btn small" id="cg-lab" type="button">Open these numbers in the lab</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ COASTER LAB ============ -->
+  <main class="screen popzone" id="s-coaster-lab" hidden>
+    <div class="ride-head popzone">
+      <div><h2>Rollercoaster physics lab</h2><p>Type in the launch numbers. The track rebuilds, the car flies, and every equation is worked out below.</p></div>
+      <div class="subnav" role="group" aria-label="Rollercoaster pages"><button type="button" data-go="coaster-play">Game</button><button type="button" data-go="coaster-lab" aria-current="page">Physics lab</button></div>
+    </div>
+    <div class="ride-grid">
+      <div class="panel">
+        <h3>Launch settings</h3>
+        <div id="coaster-fields"></div>
+        <div class="sub">Gravity presets</div>
+        <div class="btnrow" id="planets">
+          <button class="btn small" type="button" data-g="9.81">Earth 9.81</button>
+          <button class="btn small" type="button" data-g="3.71">Mars 3.71</button>
+          <button class="btn small" type="button" data-g="1.62">Moon 1.62</button>
+          <button class="btn small" type="button" data-g="24.79">Jupiter 24.79</button>
+        </div>
+        <div class="sub">Ride controls</div>
+        <div class="field">
+          <label for="c-speed">Animation speed</label>
+          <input id="c-speed" type="range" min="0.25" max="3" step="0.05" value="1">
+        </div>
+        <div class="btnrow">
+          <button class="btn primary" id="c-go" type="button">Launch the car</button>
+          <button class="btn" id="c-reset" type="button">Reset</button>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="live">
+          <div class="chip"><small>Time</small><b id="lv-t">0.00</b> <span class="unit">s</span></div>
+          <div class="chip"><small>Distance x</small><b id="lv-x">0.00</b> <span class="unit">m</span></div>
+          <div class="chip"><small>Height y</small><b id="lv-y">0.00</b> <span class="unit">m</span></div>
+          <div class="chip"><small>Speed vₓ</small><b id="lv-vx">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Speed v_y</small><b id="lv-vy">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Total speed</small><b id="lv-v">0.00</b> <span class="unit">m/s</span></div>
+        </div>
+        <div class="canvas-wrap" id="coaster-wrap"><canvas id="coaster-canvas" role="img" aria-label="Side view of the rollercoaster launch ramp, the flight path of the car and the landing track"></canvas></div>
+        <div class="panel report">
+          <h3>Ride report</h3>
+          <dl id="coaster-report"></dl>
+          <p class="note" id="coaster-note"></p>
+        </div>
+      </div>
+    </div>
+    <div class="panel work">
+      <h3>Show the work</h3>
+      <ol id="coaster-work"></ol>
+    </div>
+  </main>
+
+  <!-- ============ BUMPER GAME ============ -->
+  <main class="screen popzone" id="s-bumper-play" hidden>
+    <div class="ride-head popzone">
+      <div><h2>Bumper Cars</h2><p>Car A rolls at car B. After the hit the motors cut out and floor friction slows both cars. Park B in the bay.</p></div>
+      <div class="subnav" role="group" aria-label="Bumper car pages"><button type="button" data-go="bumper-play" aria-current="page">Game</button><button type="button" data-go="bumper-lab">Physics lab</button></div>
+    </div>
+    <div class="levels" id="bg-levels" role="group" aria-label="Levels"></div>
+    <div class="panel brief" id="bg-brief"></div>
+    <div class="play-grid">
+      <div class="stage">
+        <div class="live">
+          <div class="chip"><small>Time</small><b id="bgl-t">0.00</b> <span class="unit">s</span></div>
+          <div class="chip"><small>Car A speed</small><b id="bgl-va">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Car B speed</small><b id="bgl-vb">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Car B position</small><b id="bgl-x">0.00</b> <span class="unit">m</span></div>
+          <div class="chip"><small>Bay centre</small><b id="bgl-g">0.00</b> <span class="unit">m</span></div>
+        </div>
+        <div class="canvas-wrap" id="bg-wrap"><canvas id="bg-canvas" class="aim" role="img" aria-label="Top view of the arena with car A, car B and the parking bay. Drag sideways to set car A's speed."></canvas></div>
+        <div class="panel result" id="bg-result" aria-live="polite"></div>
+      </div>
+      <div class="panel">
+        <h3>Car A controls</h3>
+        <div id="bg-fields"></div>
+        <div class="btnrow">
+          <button class="btn primary big" id="bg-go" type="button">Crash!</button>
+          <button class="btn" id="bg-hint" type="button">Hint (−20 pts)</button>
+        </div>
+        <p class="hintbox" id="bg-hintbox"></p>
+        <div class="sub">Check your math</div>
+        <button class="btn small" id="bg-lab" type="button">Open these numbers in the lab</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ BUMPER LAB ============ -->
+  <main class="screen popzone" id="s-bumper-lab" hidden>
+    <div class="ride-head popzone">
+      <div><h2>Bumper cars physics lab</h2><p>Set mass, speed, size and where the bumpers touch. The arena shows the crash and the report checks momentum and works out the spin.</p></div>
+      <div class="subnav" role="group" aria-label="Bumper car pages"><button type="button" data-go="bumper-play">Game</button><button type="button" data-go="bumper-lab" aria-current="page">Physics lab</button></div>
+    </div>
+    <div class="ride-grid">
+      <div class="panel">
+        <h3>Car settings</h3>
+        <div class="cars">
+          <div>
+            <div class="cardhead"><span class="dot" style="background:var(--pink)"></span>Car A (left)</div>
+            <div id="a-fields"></div>
+          </div>
+          <div>
+            <div class="cardhead"><span class="dot" style="background:var(--mint)"></span>Car B (right)</div>
+            <div id="b-fields"></div>
+          </div>
+        </div>
+        <div class="sub">Both cars</div>
+        <div id="shared-fields"></div>
+        <div class="sub">Quick setups</div>
+        <div class="btnrow" id="presets">
+          <button class="btn small" type="button" data-p="head">Head-on bounce</button>
+          <button class="btn small" type="button" data-p="heavy">Heavy meets light</button>
+          <button class="btn small" type="button" data-p="sticky">Sticky crash</button>
+          <button class="btn small" type="button" data-p="spin">Glancing spin</button>
+        </div>
+        <div class="sub">Ride controls</div>
+        <div class="field">
+          <label for="b-speed">Animation speed</label>
+          <input id="b-speed" type="range" min="0.15" max="2" step="0.05" value="0.6">
+        </div>
+        <div class="btnrow">
+          <button class="btn primary" id="b-go" type="button">Start the crash</button>
+          <button class="btn" id="b-reset" type="button">Reset</button>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="live">
+          <div class="chip"><small>Time</small><b id="bl-t">0.00</b> <span class="unit">s</span></div>
+          <div class="chip"><small>Car A speed</small><b id="bl-va">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Car B speed</small><b id="bl-vb">0.00</b> <span class="unit">m/s</span></div>
+          <div class="chip"><small>Car A spin</small><b id="bl-wa">0.00</b> <span class="unit">rad/s</span></div>
+          <div class="chip"><small>Car B spin</small><b id="bl-wb">0.00</b> <span class="unit">rad/s</span></div>
+          <div class="chip"><small>Stage</small><b id="bl-st" style="font-family:'Nunito',sans-serif;font-weight:700">Ready</b></div>
+        </div>
+        <div class="canvas-wrap" id="bumper-wrap"><canvas id="bumper-canvas" role="img" aria-label="Top view of the bumper car arena with car A and car B and their velocity arrows"></canvas></div>
+        <div class="panel report">
+          <h3>Crash report</h3>
+          <div class="tbl-wrap"><table id="bumper-table"></table></div>
+          <dl id="bumper-report" style="margin-top:12px"></dl>
+          <p class="note" id="bumper-note"></p>
+        </div>
+      </div>
+    </div>
+    <div class="panel work">
+      <h3>Show the work</h3>
+      <ol id="bumper-work"></ol>
+    </div>
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
